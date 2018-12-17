@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- created with https://www.codeandweb.com/physicseditor -->
+<bodydef>
+
+    <body name="bird">
+        <is_dynamic/>
+        <linear_damping>0</linear_damping>
+        <angular_damping>0</angular_damping>
+        <allow_sleep/>
+        <fixture>
+            <density>2</density>
+            <friction>1</friction>
+            <restitution>0</restitution>
+            <filter_category_bits>1</filter_category_bits>
+            <filter_mask_bits>65535</filter_mask_bits>
+            <filter_group_index>0</filter_group_index>
+            <polygon>107.0000, 34.0000, 103.0000, 47.0000, 88.6441, 58.6441, 73.8983, 66.4407, 55.7627, 66.6102, 73.0000, 4.0000, 89.0000, 9.0000, 101.1864, 22.5424</polygon>
+            <polygon>23.0000, 22.0000, 35.0000, 8.0000, 52.0000, 4.0000, 73.0000, 4.0000, 55.7627, 66.6102, 38.0000, 59.0000, 22.7119, 41.1864</polygon>
+        </fixture>
+    </body>
+
+    <body name="pipe">
+        <linear_damping>0</linear_damping>
+        <angular_damping>0</angular_damping>
+        <allow_sleep/>
+        <fixture>
+            <density>2</density>
+            <friction>1</friction>
+            <restitution>0</restitution>
+            <filter_category_bits>1</filter_category_bits>
+            <filter_mask_bits>65535</filter_mask_bits>
+            <filter_group_index>1</filter_group_index>
+            <polygon>0.0000, 1024.0000, 0.0000, 971.0000, 121.0000, 971.0000, 128.0000, 1024.0000</polygon>
+            <polygon>128.0000, 971.0000, 128.0000, 1024.0000, 121.0000, 971.0000</polygon>
+            <polygon>121.0000, 0.0000, 121.0000, 971.0000, 7.0000, 971.0000, 7.0000, 0.0000</polygon>
+        </fixture>
+    </body>
+
+    <body name="ground">
+        <linear_damping>0</linear_damping>
+        <angular_damping>0</angular_damping>
+        <allow_sleep/>
+        <fixture>
+            <density>2</density>
+            <friction>1</friction>
+            <restitution>0</restitution>
+            <filter_category_bits>1</filter_category_bits>
+            <filter_mask_bits>65535</filter_mask_bits>
+            <filter_group_index>1</filter_group_index>
+            <polygon>2048.0000, -2.0000, 2048.0000, 156.0000, 0.0000, 156.0000, 0.0000, 0.0000</polygon>
+        </fixture>
+    </body>
+
+    <metadata>
+        <format>1</format>
+        <ptm_ratio>410</ptm_ratio>
+    </metadata>
+
+</bodydef>
+
