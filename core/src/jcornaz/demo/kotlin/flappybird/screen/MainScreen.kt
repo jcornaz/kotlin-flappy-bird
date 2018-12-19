@@ -20,6 +20,8 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.graphics.use
 
+private const val MAX_FRAME_DURATION = 1f / 25f
+
 class MainScreen(private val assetBundle: AssetBundle) : EndableScreen(), KtxScreen {
 
   private val gameWorld = GameWorld()
@@ -51,11 +53,13 @@ class MainScreen(private val assetBundle: AssetBundle) : EndableScreen(), KtxScr
   }
 
   override fun render(delta: Float) {
-    gameWorld.step(delta)
+    val elapsedTime = minOf(delta, MAX_FRAME_DURATION)
 
-    camera.position.x = bird.x + bird.width / 2f
+    gameWorld.step(elapsedTime)
 
-    stage.act(delta)
+    camera.position.x = gameWorld.bird.worldCenter.x
+
+    stage.act(elapsedTime)
 
     clearScreen(0.6f, 0.9f, 1f)
     stage.viewport.apply()
@@ -84,7 +88,7 @@ class MainScreen(private val assetBundle: AssetBundle) : EndableScreen(), KtxScr
 
 private fun Iterable<Actor>.dispose() {
   forEach {
-    (it as? Group)?.children?.dispose()
-    (it as? Disposable)?.dispose()
+    if (it is Group) it.children.dispose()
+    if (it is Disposable) it.dispose()
   }
 }
