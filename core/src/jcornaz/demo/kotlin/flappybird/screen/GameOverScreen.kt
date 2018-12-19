@@ -69,6 +69,6 @@ class GameOverScreen(private val background: Screen, private val font: BitmapFon
   }
 
   override fun dispose() {
-    super.dispose()
+    batch.dispose()
   }
 }

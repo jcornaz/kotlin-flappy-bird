@@ -3,8 +3,10 @@ package jcornaz.demo.kotlin.flappybird.screen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import jcornaz.demo.kotlin.flappybird.WORLD_HEIGHT
@@ -31,8 +33,6 @@ class MainScreen(private val assetBundle: AssetBundle) : EndableScreen(), KtxScr
 
   private val batch = SpriteBatch()
   private val screenViewPort = ScreenViewport()
-
-  private val box2dDebug = Box2DDebugRenderer()
 
   private var score = 0
 
@@ -75,6 +75,16 @@ class MainScreen(private val assetBundle: AssetBundle) : EndableScreen(), KtxScr
   }
 
   override fun dispose() {
+    stage.actors.dispose()
     stage.dispose()
+    batch.dispose()
+    gameWorld.dispose()
+  }
+}
+
+private fun Iterable<Actor>.dispose() {
+  forEach {
+    (it as? Group)?.children?.dispose()
+    (it as? Disposable)?.dispose()
   }
 }

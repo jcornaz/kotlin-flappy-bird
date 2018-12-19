@@ -12,16 +12,16 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.Pool
 import com.github.jcornaz.miop.filterIsInstance
+import jcornaz.demo.kotlin.flappybird.LibGdxScope
 import jcornaz.demo.kotlin.flappybird.PIXEL_PER_METER
 import jcornaz.demo.kotlin.flappybird.WORLD_HEIGHT
 import jcornaz.demo.kotlin.flappybird.physics.ContactEvent
 import jcornaz.demo.kotlin.flappybird.physics.GameWorld
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.filter
 import kotlinx.coroutines.channels.firstOrNull
 import kotlinx.coroutines.launch
-import ktx.async.KtxAsync
 
 
 class Pipe(private val body: Body, texture: Texture, flipVertically: Boolean) : Actor() {
@@ -46,10 +46,7 @@ private const val MAX_Y = WORLD_HEIGHT
 private const val MIN_OPEN = 0.5f
 private const val MAX_OPEN = 1f
 
-class PipeDoor(private val gameWorld: GameWorld, pipeTexture: Texture, private val score: () -> Unit) : Group(), Pool.Poolable, Disposable, CoroutineScope {
-  private val job = Job()
-  override val coroutineContext = job + KtxAsync
-
+class PipeDoor(private val gameWorld: GameWorld, pipeTexture: Texture, private val score: () -> Unit) : Group(), Pool.Poolable, Disposable, CoroutineScope by LibGdxScope() {
   private val ceil = Pipe(gameWorld.createPipe(), pipeTexture, true).also { addActor(it) }
   private val floor = Pipe(gameWorld.createPipe(), pipeTexture, false).also { addActor(it) }
 
@@ -88,7 +85,7 @@ class PipeDoor(private val gameWorld: GameWorld, pipeTexture: Texture, private v
   }
 
   override fun dispose() {
-    job.cancel()
+    cancel()
   }
 }
 

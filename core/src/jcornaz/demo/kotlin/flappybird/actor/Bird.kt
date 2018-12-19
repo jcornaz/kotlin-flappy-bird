@@ -10,25 +10,22 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 import com.github.jcornaz.miop.filterIsInstance
+import jcornaz.demo.kotlin.flappybird.LibGdxScope
 import jcornaz.demo.kotlin.flappybird.PIXEL_PER_METER
 import jcornaz.demo.kotlin.flappybird.WORLD_HEIGHT
 import jcornaz.demo.kotlin.flappybird.physics.ContactEvent
 import jcornaz.demo.kotlin.flappybird.physics.GameWorld
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.filter
 import kotlinx.coroutines.channels.firstOrNull
 import kotlinx.coroutines.launch
 import ktx.actors.onKeyDown
-import ktx.async.KtxAsync
 
 private const val HORIZONTAL_VELOCITY = 1.5f
 private const val JUMP_VERTICAL_VELOCITY = 2.5f
 
-class Bird(private val gameWorld: GameWorld, texture: TextureAtlas) : Actor(), Disposable, CoroutineScope {
-  private val job = Job()
-  override val coroutineContext = job + KtxAsync
-
+class Bird(private val gameWorld: GameWorld, texture: TextureAtlas) : Actor(), Disposable, CoroutineScope by LibGdxScope() {
   private val flyingAnimation = Animation(1f / 12f, texture.findRegions("flying"))
   private val deadAnimation = Animation(1f / 5f, texture.findRegions("dead"))
 
@@ -90,6 +87,6 @@ class Bird(private val gameWorld: GameWorld, texture: TextureAtlas) : Actor(), D
   }
 
   override fun dispose() {
-    job.cancel()
+    cancel()
   }
 }
